@@ -64,6 +64,11 @@ app.use("/api/v1/auth", auth);
 app.use("/api/v1/admin", admin);
 app.use("/api/v1/reviews", reviews);
 app.use(errorHandler);
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "public", "index.html"));
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 
