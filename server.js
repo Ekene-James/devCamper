@@ -5,20 +5,22 @@ const morgan = require("morgan");
 const path = require("path");
 const fileupload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const hpp = require("hpp");
+const cors = require("cors");
+const rateLimit = require("express-rate-limit");
+const mongoSanitize = require("express-mongo-sanitize");
+const colors = require("colors");
+
 //bring in the router files
 const bootcamp = require("./routes/bootcamps");
 const courses = require("./routes/courses");
 const auth = require("./routes/auth");
 const admin = require("./routes/admin");
 const reviews = require("./routes/reviews");
-const colors = require("colors");
+
 const errorHandler = require("./middleware/error");
-const mongoSanitize = require("express-mongo-sanitize");
-const helmet = require("helmet");
-const xss = require("xss-clean");
-const hpp = require("hpp");
-const cors = require("cors");
-const rateLimit = require("express-rate-limit");
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -64,11 +66,11 @@ app.use("/api/v1/auth", auth);
 app.use("/api/v1/admin", admin);
 app.use("/api/v1/reviews", reviews);
 app.use(errorHandler);
-if (process.env.NODE_ENV === "production") {
+/*if (process.env.NODE_ENV === "production") {
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "public", "index.html"));
   });
-}
+}*/
 
 const PORT = process.env.PORT || 5000;
 
